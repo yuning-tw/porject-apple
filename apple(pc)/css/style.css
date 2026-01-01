@@ -126,12 +126,12 @@ layout
   color: #333;
 
   border-bottom: 12px solid #fff;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  position: relative; /* 建立定位上下文：讓絕對定位的子元素（例如 .placeholder、.content-image）以此為參考定位 */
+  overflow: hidden; /* 隱藏超出容器的內容（常用於裁剪背景或避免子元素溢出） */
+  display: flex; /* 啟用 Flexbox，子元素成為彈性項目，方便置中與排列 */
+  flex-direction: column; /* 主軸為垂直（從上到下排列子元素） */
+  align-items: center; /* 交叉軸（水平）置中子元素 */
+  justify-content: flex-start; /* 主軸（垂直）靠上對齊；若改為 center，子元素會垂直置中 */
 }
 
 .content-image {
@@ -219,7 +219,7 @@ layout
 
 .grid-image {
   height: 580px;
-  background: #e9e9e9; /* 顏色略淺 */
+  background: #f5f5f7;
   color: #333;
 
   position: relative;
@@ -227,13 +227,21 @@ layout
 }
 
 .grid-image .content {
-  position: absolute;
+  position: relative;
   padding-top: 57px;
   left: 50%;
   transform: translateX(-50%); /* 只水平置中 */
   text-align: center;
   z-index: 2;
   color: #111;
+}
+
+.grid-image .content .content-image {
+  position: absolute;
+  inset: 0;            /* top:0; right:0; bottom:0; left:0; */
+  z-index: 1;          /* 放在 .content 背後 */
+  background-size: cover;
+  background-position: center;
 }
 
 .grid-item h3 {
