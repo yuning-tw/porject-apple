@@ -105,10 +105,77 @@ layout
 .nav {
   color: white;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* 將選項置中（桌面） */
   gap: 12px;
   width: 100%;
   display: flex;
+  position: relative; /* 讓 logo 可以絕對定位到左側 */
+}
+
+.nav .logo {
+  position: absolute;
+  left: 40px; /* 與 .navbar padding 保持一致 */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 漢堡按鈕 */
+.hamburger {
+  display: none; /* 只在小螢幕顯示 */
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+.hamburger .bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  margin: 3px 0;
+}
+
+/* 行動選單（漢堡打開時顯示） */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 48px; /* 在 navbar 下面 */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  color: #fff;
+  z-index: 2000;
+  padding: 24px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.mobile-menu.open {
+  display: flex;
+}
+.mobile-menu .nav-mobile {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 420px;
+}
+.mobile-menu .nav-mobile li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.mobile-menu .nav-mobile a {
+  display: block;
+  padding: 14px 8px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
 }
 
 .nav-link {
@@ -236,12 +303,48 @@ layout
   color: #111;
 }
 
-.grid-image .content .content-image {
-  position: absolute;
+.grid-image .content-image {
+  position: relative;
   inset: 0; /* top:0; right:0; bottom:0; left:0; */
   z-index: 1; /* 放在 .content 背後 */
   background-size: cover;
   background-position: center;
+}
+
+/* 手機/小平板：在 800px 以下調整背景與 grid 為單欄 */
+@media (max-width: 800px) {
+  .responsive-bg {
+    /* 手機/平板等小螢幕回到 cover 並置中，確保重要內容可見 */
+    background-size: cover;
+    background-position: center;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .grid-image {
+    height: 580px; /* 在小螢幕仍維持 580px 高度，避免圖片跑掉 */
+  }
+
+  .grid-image .content {
+    left: 0;
+    transform: none;
+    padding-top: 24px;
+  }
+}
+
+/* 漢堡按鈕在 960px 以下顯示；桌面/全螢幕 ( >960px ) 不會顯示漢堡 */
+@media (max-width: 960px) {
+  .nav {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
 }
 
 .grid-item h3 {
